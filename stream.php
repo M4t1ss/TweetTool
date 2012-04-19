@@ -9,7 +9,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	$keywords = $_POST['Keywords'];
 	$time = $_POST['Time'];
 	//nomaina datubâzes nosaukumu
-	$db_name = strip_tags($_POST['apraksts']);
+	$db_name = strip_tags($_POST['database']);
 	$config = MyConfig::read('includes/settings.php');
 	$config['db_database'] = $db_name;
 	MyConfig::write('includes/settings.php', $config);
@@ -26,7 +26,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	mysql_select_db($db_database);
 
    //izdzçð tvîtu tabulu, ja tâda ir, un izveido jaunu
-	$file_content = file("table.sql");
+	$file_content = file("includes/table.sql");
 	$query = "";
 	foreach($file_content as $sql_line){
 	  if(trim($sql_line) != "" && strpos($sql_line, "--") === false){
