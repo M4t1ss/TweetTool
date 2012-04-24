@@ -4,7 +4,7 @@
 <?php
 $krasa=TRUE;
 $i=1;
-echo "<table style='text-align:center;border-spacing:0px;border:1px solid white;'>";
+echo "<table style='margin: auto auto;text-align:center;border-spacing:0px;border:1px solid white;'>";
 echo "<tr>
 <th>Place</th>
 <th>Username</th>

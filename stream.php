@@ -8,6 +8,9 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	$database = $_POST['database'];
 	$keywords = $_POST['Keywords'];
 	$time = $_POST['Time'];
+	error_reporting(0);
+	ignore_user_abort(true);
+	set_time_limit($time);
 	//nomaina datubâzes nosaukumu
 	$db_name = strip_tags($_POST['database']);
 	$config = MyConfig::read('includes/settings.php');
@@ -41,18 +44,15 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	//Paziòo par notiekoðo
 	echo "<br/>Collecting of tweets has begun! Results will start appearing shortly";
 	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/riks/stats'\",2250);</script>";
-$contentLength = ob_get_length();
-header("Content-Length: $contentLength");
-header('Connection: close');
-ob_end_flush();
-ob_flush();
-flush();
-if (session_id()) session_write_close();
+	$contentLength = ob_get_length();
+	header("Content-Length: $contentLength");
+	header('Connection: close');
+	ob_end_flush();
+	ob_flush();
+	flush();
+	if (session_id()) session_write_close();
 					
 	//Uzsâk vâksanu
-	error_reporting(0);
-	ignore_user_abort(true);
-	set_time_limit($time);
 		$opts = array(
 			'http'=>array(
 				'method'	=>	"POST",
@@ -61,25 +61,100 @@ if (session_id()) session_write_close();
 		);
 
 		$context = stream_context_create($opts);
+		$skaititajs = 0;
+		$klasteksts = "";
 		while (1){
 			$instream = fopen('https://'.$username.':'.$password.'@stream.twitter.com/1/statuses/filter.json','r' ,false, $context);
 			while(! feof($instream)) {
 				if(! ($line = stream_get_line($instream, 20000, "\n"))) {
 					continue;
 				}else{
-					include "includes/init_sql.php";
 					$remote = @mysql_connect($db_server, $db_user, $db_password);
 					mysql_set_charset("utf8", $remote);
 					mysql_select_db($db_database, $remote); 
 					$tweet = json_decode($line);
-					//Clean the inputs before storing
+					//Savâcam visu vajadzîgo par tvîtu
+					$text = mysql_real_escape_string($tweet->{'text'});
+					//Attîram tekstu
+					$tt = explode(" ", $text);
+					$text = "";
+					for ($q = 0; $q < sizeof($tt); $q++){
+						if (substr($tt[$q], 0, 1)=="@") $tt[$q] = "_@username";
+						if (substr($tt[$q], 0, 1)=="#") $tt[$q] = "_@hashtag"; //vai tomçr ðitos neòemt nost?
+						if (substr($tt[$q], 0, 4)=="http") $tt[$q] = "_@URL";
+						$text.=$tt[$q];
+						if ($q!=sizeof($tt)-1)$text.=" ";
+					}
+					//Lipina tvîtus kopâ, lîdz sakrâjas pietiekami daudz
+					if ($skaititajs<50){
+						$skaititajs++; $klasteksts.=$text." ";
+					//Ja ir pietiekami daudz tvîtu, noskaidro tiem tçmu
+					}else if($skaititajs==50){
+						$skaititajs++;
+						include("includes/functions.php");
+						$klase = klasifice($klasteksts);
+						$config = MyConfig::read('includes/settings.php');
+						$config['theme'] = $klase;
+						MyConfig::write('includes/settings.php', $config);
+						$vaardi = vardi($klase);
+					}
 					$id = mysql_real_escape_string($tweet->{'id'});
 					$geo = mysql_real_escape_string($tweet->{'place'}->{'name'});
-					$text = mysql_real_escape_string($tweet->{'text'});
+					$in_reply = mysql_real_escape_string($tweet->{'in_reply_to_screen_name'});
+					$source = mysql_real_escape_string($tweet->{'source'});
 					$screen_name = mysql_real_escape_string($tweet->{'user'}->{'screen_name'});
+					$profile_img = str_replace("_normal", "", mysql_real_escape_string($tweet->{'user'}->{'profile_image_url'}));
+					$usrid = mysql_real_escape_string($tweet->{'user'}->{'id'});
+					$usr_url = mysql_real_escape_string($tweet->{'user'}->{'url'});
+					$usr_name = mysql_real_escape_string($tweet->{'user'}->{'name'});
+					$usr_desc = mysql_real_escape_string($tweet->{'user'}->{'description'});
+					$hash = $tweet->{'entities'}->{'hashtags'};
+					$urls = $tweet->{'entities'}->{'urls'};
+					$user_mentions = $tweet->{'entities'}->{'user_mentions'};
 					//We store the new post in the database, to be able to read it later
 					if ($text!="") {
-					$ok_r = mysql_query("INSERT INTO tweets (id ,text ,screen_name, created_at, geo) VALUES ('$id', '$text', '$screen_name', NOW(), '$geo')",$remote);
+					$ok_t = mysql_query("INSERT INTO tweets (id ,text ,screen_name, created_at, geo, in_reply_to_screen_name, source) VALUES ('$id', '$text', '$screen_name', NOW(), '$geo', '$in_reply', '$source')",$remote);
+					$ok_u = mysql_query("INSERT INTO users (name, profile_image_url, id, url, screen_name, description) VALUES ('$usr_name', '$profile_img', '$usrid', '$usr_url', '$screen_name', '$usr_desc')",$remote);
+					
+					//Sadala tekstu tokenos un samet datu bâzç
+					$tt = explode(" ", $text);
+					for ($q = 0; $q < sizeof($tt); $q++){
+						$ielikts = false;
+						if ($tt[$q] != "_@username" && $tt[$q] != "_@hashtag" && $tt[$q] != "_@URL"){
+							foreach ($vaardi as $vards) {
+								if($tt[$q] == substr($vards,0,strlen($tt[$q]))) {
+								///////////////////////////////////////////////////////////////////////////////////
+								///Vienîgi ðeit vajag arî nâkamâs daïas ja nu kas.... bet lai pagaidâm ir (yawn)///
+								///////////////////////////////////////////////////////////////////////////////////
+									$ok_v = mysql_query("INSERT INTO tokens (tweet_id ,token) VALUES ('$id', '$vards')",$remote);
+									$ielikts = true;
+								}
+							}
+							$vaaa = $tt[$q];
+							if(!$ielikts) $ok_v = mysql_query("INSERT INTO tokens (tweet_id,token) VALUES ('$id', '$vaaa')",$remote);
+						}
+					}
+					//haðtagi
+					if (sizeof($hash)>0) {
+						for ($i = 0; $i < sizeof($hash); $i++){
+							$hashtag = $hash[$i]->{'text'};
+							$ok_h = mysql_query("INSERT INTO hashtags (text, tweet_id) VALUES ('$hashtag', '$id')",$remote);
+						}
+					}
+					//saites
+					if (sizeof($urls)>0) {
+						for ($i = 0; $i < sizeof($urls); $i++){
+							$url = $urls[$i]->{'expanded_url'};
+							$ok_ur = mysql_query("INSERT INTO links (url, tweet_id) VALUES ('$url', '$id')",$remote);
+						}
+					}
+					// pieminçtie lietotâji
+					if (sizeof($user_mentions)>0) {
+						for ($i = 0; $i < sizeof($user_mentions); $i++){
+							$mention = $user_mentions[$i]->{'screen_name'};
+							$ok_m = mysql_query("INSERT INTO mentions (screen_name, tweet_id) VALUES ('$mention', '$id')",$remote);
+						}
+					}
 					}
 					flush();
 					mysql_close($remote);
