@@ -13,12 +13,12 @@ if($_POST['submit']) //ja piespiests saglabāt
 	
    //apstiprinājums
    echo "<br/>Settings saved!";
-   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/riks/stats'\",1250);</script>";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/<?php echo $tweettool_path; ?>/stats'\",1250);</script>";
 }else{
 ?>
 <h2 style='margin:auto auto; text-align:center;'>Configure settings</h2>
 <br/>
-<form style="margin:auto auto; width:500px;" enctype="multipart/form-data" method="post" action="/riks/?id=configure">
+<form style="margin:auto auto; width:500px;" enctype="multipart/form-data" method="post" action="/<?php echo $tweettool_path; ?>/?id=configure">
 <TABLE>
 <TR>
    <TD class="in">Database name:</TD>

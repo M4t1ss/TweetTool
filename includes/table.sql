@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 25, 2012 at 01:33 AM
+-- Generation Time: Apr 26, 2012 at 01:14 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.3.0
 
@@ -41,6 +41,7 @@ DROP TABLE IF EXISTS `links`;
 CREATE TABLE IF NOT EXISTS `links` (
   `url` varchar(140) NOT NULL,
   `tweet_id` bigint(20) unsigned NOT NULL,
+  `display_url` varchar(140) NOT NULL,
   PRIMARY KEY (`url`,`tweet_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

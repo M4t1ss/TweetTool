@@ -27,7 +27,7 @@ if ($percent>0){
 			});		
 		});
 	</script>
-	<a href="/riks/grupa/<?php echo $zb;?>"><div style=" font: 50% 'Trebuchet MS', sans-serif;" id="progressbar<?php echo $zb;?>"></div>
+	<a href="/<?php echo $tweettool_path; ?>/grupa/<?php echo $zb;?>"><div style=" font: 50% 'Trebuchet MS', sans-serif;" id="progressbar<?php echo $zb;?>"></div>
 	<div class="sk"><?php echo $zb.":00 - ".($zb+1).":00";?></div>
 	</a>
 	<br/>
@@ -56,7 +56,7 @@ if ($percent>0){
 		});		
 	});
 </script>
-<a href="/riks/grupa/<?php echo $ddd;?>"><div style=" font: 50% 'Trebuchet MS', sans-serif;" id="progressbar<?php echo $ddd;?>"></div>
+<a href="/<?php echo $tweettool_path; ?>/grupa/<?php echo $ddd;?>"><div style=" font: 50% 'Trebuchet MS', sans-serif;" id="progressbar<?php echo $ddd;?>"></div>
 <div class="sk"><?php
 switch ($ddd) {
     case 'Mon':

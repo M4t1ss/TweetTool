@@ -43,7 +43,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 
 	//Paziòo par notiekoðo
 	echo "<br/>Collecting of tweets has begun! Results will start appearing shortly";
-	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/riks/stats'\",2250);</script>";
+	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/<?php echo $tweettool_path; ?>/stats'\",2250);</script>";
 	$contentLength = ob_get_length();
 	header("Content-Length: $contentLength");
 	header('Connection: close');
@@ -145,7 +145,8 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 					if (sizeof($urls)>0) {
 						for ($i = 0; $i < sizeof($urls); $i++){
 							$url = $urls[$i]->{'expanded_url'};
-							$ok_ur = mysql_query("INSERT INTO links (url, tweet_id) VALUES ('$url', '$id')",$remote);
+							$display_url = $urls[$i]->{'display_url'};
+							$ok_ur = mysql_query("INSERT INTO links (url, tweet_id, display_url) VALUES ('$url', '$id', '$display_url')",$remote);
 						}
 					}
 					// pieminçtie lietotâji
@@ -165,7 +166,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 ?>
 <h2 style='margin:auto auto; text-align:center;'>Get tweets from the Twitter stream</h2>
 <br/>
-<form style="margin:auto auto; width:550px;" enctype="multipart/form-data" method="post" action="/riks/?id=stream">
+<form style="margin:auto auto; width:550px;" enctype="multipart/form-data" method="post" action="/<?php echo $tweettool_path; ?>/?id=stream">
 <TABLE>
 <TR>
    <TD class="in">Database name:</TD>

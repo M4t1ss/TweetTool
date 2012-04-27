@@ -1,4 +1,6 @@
 <?php
+if(stristr(PHP_OS, 'WIN')){$path=explode("\\",getcwd());}else{$path=explode("/",getcwd());}
+$tweettool_path = $path[sizeof($path)-1];
 ob_start();
 //pieslēdzamies SQL serverim
 include "includes/myconfig.php";
@@ -28,16 +30,16 @@ mysql_select_db($db_database);
 <meta name="description" content="Apskati ko Tu un profili, kam Tu seko ir tvītojuši par ēšanu."/>
 <meta name="keywords" content="TwitterRīks, riks, analīze, Twitter, @M4t1ss, Matīss, Rikters, Matīss Rikters"/>
 <meta name="author" content="Matīss Rikters"/>
-<link rel="shortcut icon" href="/riks/favicon.ico" type="image/x-icon" />
-<script type="text/javascript" src="/riks/includes/sorttable.js"></script>
-<script type="text/javascript" src="/riks/includes/paging.js"></script>
-<link rel="stylesheet" type="text/css" href="/riks/includes/jq/css/custom-theme/jquery-ui-1.8.18.custom.css" />	
-<link rel="stylesheet" type="text/css" href="/riks/includes/tag/css/wordcloud.css">
-<link rel="stylesheet" type="text/css" href="/riks/includes/style.css" />
-<script type="text/javascript" src="/riks/includes/jq/js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="/riks/includes/jq/js/jquery-ui-1.8.16.custom.min.js"></script>
-<script type="text/javascript" src="/riks/includes/jq/js/jquery.ui.datepicker-lv.js"></script>
-<link rel="stylesheet" type="text/css" href="/riks/includes/tooltip/style.css" />
+<link rel="shortcut icon" href="/<?php echo $tweettool_path; ?>/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="/<?php echo $tweettool_path; ?>/includes/sorttable.js"></script>
+<script type="text/javascript" src="/<?php echo $tweettool_path; ?>/includes/paging.js"></script>
+<link rel="stylesheet" type="text/css" href="/<?php echo $tweettool_path; ?>/includes/jq/css/custom-theme/jquery-ui-1.8.18.custom.css" />	
+<link rel="stylesheet" type="text/css" href="/<?php echo $tweettool_path; ?>/includes/tag/css/wordcloud.css">
+<link rel="stylesheet" type="text/css" href="/<?php echo $tweettool_path; ?>/includes/style.css" />
+<script type="text/javascript" src="/<?php echo $tweettool_path; ?>/includes/jq/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/<?php echo $tweettool_path; ?>/includes/jq/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/<?php echo $tweettool_path; ?>/includes/jq/js/jquery.ui.datepicker-lv.js"></script>
+<link rel="stylesheet" type="text/css" href="/<?php echo $tweettool_path; ?>/includes/tooltip/style.css" />
 <script type="text/javascript">
 $(document).ready(function () {
 $("#contents").fadeIn(1000);
@@ -45,15 +47,18 @@ $("#contents").fadeIn(1000);
 </script>
 </head>
 <body onload="initialize()">
-<h1 style="padding-top:5px;"><img src="/riks/img/tweettool.png" /></h1>
+<h1 style="padding-top:5px;"><img src="/<?php echo $tweettool_path; ?>/img/tweettool.png" /></h1>
 <div id="top">
 <a href=""><span style="opacity: 0;">.</span></a>
-<a class="htooltip" href="/riks/home"><span>Home</span><img title="Home" src="/riks/img/home.png"/></a>
-<a class="htooltip" href="/riks/calendar"><span>Calendar</span><img title="Calendar" src="/riks/img/calendar.png"/></a>
-<a class="htooltip" href="/riks/map"><span>Map</span><img title="Map" src="/riks/img/map.png"/></a>
-<a class="htooltip" href="/riks/top"><span>Top users</span><img title="Top users" src="/riks/img/top.png"/></a>
-<a class="htooltip" href="/riks/stats"><span>Stats</span><img title="Stats" src="/riks/img/stats.png"/></a>
-<a class="htooltip" href="/riks/configure"><span>Settings</span><img title="Settings" src="/riks/img/settings.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/home"><span>Home</span><img title="Home" src="/<?php echo $tweettool_path; ?>/img/home.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/calendar"><span>Calendar</span><img title="Calendar" src="/<?php echo $tweettool_path; ?>/img/calendar.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/tags"><span>Hashtags</span><img title="Hashtags" src="/<?php echo $tweettool_path; ?>/img/calendar.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/users"><span>Mentioned users</span><img title="Mentioned users" src="/<?php echo $tweettool_path; ?>/img/calendar.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/links"><span>Links</span><img title="Links" src="/<?php echo $tweettool_path; ?>/img/calendar.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/map"><span>Map</span><img title="Map" src="/<?php echo $tweettool_path; ?>/img/map.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/top"><span>Top users</span><img title="Top users" src="/<?php echo $tweettool_path; ?>/img/top.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/stats"><span>Stats</span><img title="Stats" src="/<?php echo $tweettool_path; ?>/img/stats.png"/></a>
+<a class="htooltip" href="/<?php echo $tweettool_path; ?>/configure"><span>Settings</span><img title="Settings" src="/<?php echo $tweettool_path; ?>/img/settings.png"/></a>
 </div>
 <div id="contents" style="display: none;margin-top:5px;margin-bottom:5px;padding:6px;">
 <?php $id = $_GET['id']; if ( !$id || $id == "" ) { include "home.php"; } else { include($id.".php"); } ?>

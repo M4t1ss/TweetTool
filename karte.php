@@ -43,7 +43,7 @@ $q = mysql_query("SELECT distinct geo, count( * ) skaits FROM `tweets` WHERE geo
 					if ($lat & $lng){
 					?>
 					//Apraksts
-					var contentString<?php echo $i;?> = '<a href="/riks/vieta/<?php echo $vieta;?>"><?php echo $vieta." - ".$skaits.$tviti;?>';
+					var contentString<?php echo $i;?> = '<a href="/<?php echo $tweettool_path; ?>/vieta/<?php echo $vieta;?>"><?php echo $vieta." - ".$skaits.$tviti;?>';
 					var infowindow<?php echo $i;?> = new google.maps.InfoWindow({
 						content: contentString<?php echo $i;?>
 					});
