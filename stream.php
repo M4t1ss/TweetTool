@@ -43,7 +43,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 
 	//Paziòo par notiekoðo
 	echo "<br/>Collecting of tweets has begun! Results will start appearing shortly";
-	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/<?php echo $tweettool_path; ?>/stats'\",2250);</script>";
+	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/$tweettool_path/stats'\",2250);</script>";
 	$contentLength = ob_get_length();
 	header("Content-Length: $contentLength");
 	header('Connection: close');

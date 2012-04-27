@@ -43,7 +43,7 @@ if($_POST['submit']) //ja piespiests sūtīt
 	 }
    //apstiprinājums
    echo "<br/>Database Uploaded!";
-   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/<?php echo $tweettool_path; ?>/stats'\",1250);</script>";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/$tweettool_path/stats'\",1250);</script>";
 }else{
 ?>
 <h2 style='margin:auto auto; text-align:center;'>Upload database</h2>
