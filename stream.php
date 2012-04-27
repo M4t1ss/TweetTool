@@ -43,7 +43,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 
 	//Paziòo par notiekoðo
 	echo "<br/>Collecting of tweets has begun! Results will start appearing shortly";
-	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/$tweettool_path/stats'\",2250);</script>";
+	echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/stats'\",2250);</script>";
 	$contentLength = ob_get_length();
 	header("Content-Length: $contentLength");
 	header('Connection: close');
@@ -61,8 +61,6 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 		);
 
 		$context = stream_context_create($opts);
-		$skaititajs = 0;
-		$klasteksts = "";
 		while (1){
 			$instream = fopen('https://'.$username.':'.$password.'@stream.twitter.com/1/statuses/filter.json','r' ,false, $context);
 			while(! feof($instream)) {
@@ -84,19 +82,6 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 						if (substr($tt[$q], 0, 4)=="http") $tt[$q] = "_@URL";
 						$text.=$tt[$q];
 						if ($q!=sizeof($tt)-1)$text.=" ";
-					}
-					//Lipina tvîtus kopâ, lîdz sakrâjas pietiekami daudz
-					if ($skaititajs<50){
-						$skaititajs++; $klasteksts.=$text." ";
-					//Ja ir pietiekami daudz tvîtu, noskaidro tiem tçmu
-					}else if($skaititajs==50){
-						$skaititajs++;
-						include("includes/functions.php");
-						$klase = klasifice($klasteksts);
-						$config = MyConfig::read('includes/settings.php');
-						$config['theme'] = $klase;
-						MyConfig::write('includes/settings.php', $config);
-						$vaardi = vardi($klase);
 					}
 					$id = mysql_real_escape_string($tweet->{'id'});
 					$geo = mysql_real_escape_string($tweet->{'place'}->{'name'});
@@ -121,17 +106,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 					for ($q = 0; $q < sizeof($tt); $q++){
 						$ielikts = false;
 						if ($tt[$q] != "_@username" && $tt[$q] != "_@hashtag" && $tt[$q] != "_@URL"){
-							foreach ($vaardi as $vards) {
-								if($tt[$q] == substr($vards,0,strlen($tt[$q]))) {
-								///////////////////////////////////////////////////////////////////////////////////
-								///Vienîgi ðeit vajag arî nâkamâs daïas ja nu kas.... bet lai pagaidâm ir (yawn)///
-								///////////////////////////////////////////////////////////////////////////////////
-									$ok_v = mysql_query("INSERT INTO tokens (tweet_id ,token) VALUES ('$id', '$vards')",$remote);
-									$ielikts = true;
-								}
-							}
-							$vaaa = $tt[$q];
-							if(!$ielikts) $ok_v = mysql_query("INSERT INTO tokens (tweet_id,token) VALUES ('$id', '$vaaa')",$remote);
+							$ok_v = mysql_query("INSERT INTO tokens (tweet_id,token) VALUES ('$id', '$vaaa')",$remote);
 						}
 					}
 					//haðtagi
@@ -166,7 +141,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 ?>
 <h2 style='margin:auto auto; text-align:center;'>Get tweets from the Twitter stream</h2>
 <br/>
-<form style="margin:auto auto; width:550px;" enctype="multipart/form-data" method="post" action="/<?php echo $tweettool_path; ?>/?id=stream">
+<form style="margin:auto auto; width:550px;" enctype="multipart/form-data" method="post" action="<?php echo $tweettool_path; ?>?id=stream">
 <TABLE>
 <TR>
    <TD class="in">Database name:</TD>

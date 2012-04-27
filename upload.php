@@ -43,12 +43,12 @@ if($_POST['submit']) //ja piespiests sūtīt
 	 }
    //apstiprinājums
    echo "<br/>Database Uploaded!";
-   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/$tweettool_path/stats'\",1250);</script>";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/stats'\",1250);</script>";
 }else{
 ?>
 <h2 style='margin:auto auto; text-align:center;'>Upload database</h2>
 <br/>
-<form style="margin:auto auto; width:500px;" enctype="multipart/form-data" method="post" action="/<?php echo $tweettool_path; ?>/?id=upload">
+<form style="margin:auto auto; width:500px;" enctype="multipart/form-data" method="post" action="<?php echo $tweettool_path; ?>?id=upload">
 <TABLE>
 <TR>
    <TD class="in">Database name:</TD>

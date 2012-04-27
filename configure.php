@@ -1,6 +1,6 @@
 <?php
 
-if($_POST['submit']) //ja piespiests saglabāt
+if($_POST['saveset']) //ja piespiests saglabāt
 {	
 	//nomaina datubāzes nosaukumu
 	$config['db_server'] = $_POST['database_host'];
@@ -13,12 +13,12 @@ if($_POST['submit']) //ja piespiests saglabāt
 	
    //apstiprinājums
    echo "<br/>Settings saved!";
-   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '/$tweettool_path/stats'\",1250);</script>";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/stats'\",1250);</script>";
 }else{
 ?>
 <h2 style='margin:auto auto; text-align:center;'>Configure settings</h2>
 <br/>
-<form style="margin:auto auto; width:500px;" enctype="multipart/form-data" method="post" action="/<?php echo $tweettool_path; ?>/?id=configure">
+<form style="margin:auto auto; width:500px;" enctype="multipart/form-data" method="post" action="<?php echo $tweettool_path; ?>?id=configure">
 <TABLE>
 <TR>
    <TD class="in">Database name:</TD>
@@ -58,7 +58,7 @@ if($_POST['submit']) //ja piespiests saglabāt
 </TR>
 <TR>
    <TD class="in"></TD>
-   <TD class="in"><INPUT style="float:left;" TYPE="submit" name="submit" value="Save"/></TD> 
+   <TD class="in"><INPUT style="float:left;" TYPE="submit" name="saveset" value="Save"/></TD> 
 </TR>
 </TABLE>
 </form>
