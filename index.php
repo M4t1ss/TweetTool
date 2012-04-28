@@ -63,9 +63,9 @@ $("#contents").fadeIn(1000);
 <a href=""><span style="opacity: 0;">.</span></a>
 <a class="htooltip" href="<?php echo $tweettool_path; ?>home"><span>Home</span><img title="Home" src="<?php echo $tweettool_path; ?>img/home.png"/></a>
 <a class="htooltip" href="<?php echo $tweettool_path; ?>calendar"><span>Calendar</span><img title="Calendar" src="<?php echo $tweettool_path; ?>img/calendar.png"/></a>
-<a class="htooltip" href="<?php echo $tweettool_path; ?>tags"><span>Hashtags</span><img title="Hashtags" src="<?php echo $tweettool_path; ?>img/calendar.png"/></a>
-<a class="htooltip" href="<?php echo $tweettool_path; ?>users"><span>Mentioned users</span><img title="Mentioned users" src="<?php echo $tweettool_path; ?>img/calendar.png"/></a>
-<a class="htooltip" href="<?php echo $tweettool_path; ?>links"><span>Links</span><img title="Links" src="<?php echo $tweettool_path; ?>img/calendar.png"/></a>
+<a class="htooltip" href="<?php echo $tweettool_path; ?>tags"><span>Hashtags</span><img title="Hashtags" src="<?php echo $tweettool_path; ?>img/hash.png"/></a>
+<a class="htooltip" href="<?php echo $tweettool_path; ?>users"><span>Mentioned users</span><img title="Mentioned users" src="<?php echo $tweettool_path; ?>img/user.png"/></a>
+<a class="htooltip" href="<?php echo $tweettool_path; ?>links"><span>Links</span><img title="Links" src="<?php echo $tweettool_path; ?>img/link.png"/></a>
 <a class="htooltip" href="<?php echo $tweettool_path; ?>map"><span>Map</span><img title="Map" src="<?php echo $tweettool_path; ?>img/map.png"/></a>
 <a class="htooltip" href="<?php echo $tweettool_path; ?>top"><span>Top users</span><img title="Top users" src="<?php echo $tweettool_path; ?>img/top.png"/></a>
 <a class="htooltip" href="<?php echo $tweettool_path; ?>stats"><span>Stats</span><img title="Stats" src="<?php echo $tweettool_path; ?>img/stats.png"/></a>
