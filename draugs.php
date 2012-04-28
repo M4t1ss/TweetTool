@@ -202,7 +202,7 @@ echo $draugs." has no tweets.";
 				while($r=mysql_fetch_array($map)){
 				   $vieta=$r["geo"];
 				   $skaits=$r["skaits"];
-				   if ($skaits==1) {$tviti=" tvīts";} else {$tviti=" tvīti";}
+				   if ($skaits==1) {$tviti=" Tweet";} else {$tviti=" tvīti";}
 					$irvieta = mysql_query("SELECT * FROM vietas where nosaukums='$vieta'");
 					if(mysql_num_rows($irvieta)==0){
 						//ja nav tādas vietas datu bāzē,

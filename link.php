@@ -1,6 +1,10 @@
 <?php
 $vards=urldecode($_GET['vards']);
 $nos = mysql_query("SELECT display_url FROM links where url = '$vards'");
+if(mysql_num_rows($nos)==0){
+	echo "The database is empty!";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/home'\",1250);</script>";
+}else{
 $xx=mysql_fetch_array($nos);
 $adrese = $xx["display_url"];
 $vardi = mysql_query("SELECT tweet_id FROM links where url = '$vards'");
@@ -40,8 +44,8 @@ google.setOnLoadCallback(OnLoad);
 $krasa=TRUE;
 echo "<table id='results' style='margin:auto auto;'>";
 echo "<tr>
-<th>Lietotājs</th>
-<th>Tvīts</th>
+<th>User</th>
+<th>Tweet</th>
 </tr>";
 while($r=mysql_fetch_array($vardi)){
 	$tvits = $r["tweet_id"];
@@ -55,5 +59,6 @@ while($r=mysql_fetch_array($vardi)){
 	}
 }
 echo "</table>";
+}
 ?>
 </div>

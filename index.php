@@ -31,11 +31,6 @@ header('Location: configure');
 	$connection = @mysql_connect($db_server, $db_user, $db_password);
 	mysql_set_charset("utf8", $connection);
 	mysql_select_db($db_database);
-
-	$result = mysql_query("SELECT * FROM tweets");
-	if($_GET['id']!="configure"&&$_GET['id']!="home"&&$_GET['id']!="stream"&&$_GET['id']!="upload"&&mysql_num_rows($result)==0){
-		header('Location: home');
-	}
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -52,10 +47,10 @@ header('Location: configure');
 <link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/jq/css/custom-theme/jquery-ui-1.8.18.custom.css" />	
 <link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/tag/css/wordcloud.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/style.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/tooltip/style.css" />
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery.ui.datepicker-lv.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/tooltip/style.css" />
 <script type="text/javascript">
 $(document).ready(function () {
 $("#contents").fadeIn(1000);

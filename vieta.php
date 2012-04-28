@@ -35,6 +35,10 @@ $vards=urldecode($_GET['vieta']);
 <?php
 //Pieslēgums DB
 $tviti = mysql_query("SELECT screen_name, text FROM tweets where geo = '$vards'");
+if(mysql_num_rows($tviti)==0){
+	echo "The database is empty!";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/home'\",1250);</script>";
+}else{
 
 $krasa=TRUE;
 echo "<table id='results' style='margin:auto auto;'>";
@@ -50,5 +54,6 @@ while($p=mysql_fetch_array($tviti)){
 	$krasa=!$krasa;
 }
 echo "</table>";
+}
 ?>
 </div>

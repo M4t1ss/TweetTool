@@ -1,9 +1,13 @@
 <?php
 $vards=urldecode($_GET['vards']);
 $vardi = mysql_query("SELECT tweet_id FROM hashtags where text = '$vards'");
+if(mysql_num_rows($vardi)==0){
+	echo "The database is empty!";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/home'\",1250);</script>";
+}else{
 ?>
 <div style='text-align:center;margin:auto auto;'>
-<h2><?php echo $vards; ?></h2>
+<h2>#<?php echo $vards; ?></h2>
 	<div style="padding:5px;" id="content">Loading...</div>
 </div>
 <!-- attēls no google image search -->
@@ -37,8 +41,8 @@ google.setOnLoadCallback(OnLoad);
 $krasa=TRUE;
 echo "<table id='results' style='margin:auto auto;'>";
 echo "<tr>
-<th>Lietotājs</th>
-<th>Tvīts</th>
+<th>User</th>
+<th>Tweet</th>
 </tr>";
 while($r=mysql_fetch_array($vardi)){
 	$tvits = $r["tweet_id"];
@@ -52,5 +56,6 @@ while($r=mysql_fetch_array($vardi)){
 	}
 }
 echo "</table>";
+}
 ?>
 </div>

@@ -1,4 +1,30 @@
-<h2 style='margin:auto auto; text-align:center;'>Tweet statistics</h2>
+<h2 style='text-align:center;'>Tweet statistics</h2>
+<script>
+$(function() {
+	setInterval(function() {
+    $("#content").load(location.href+" #content>*","");
+}, 1000);
+});
+$(function() {
+	$(".meter > span").each(function() {
+		$(this)
+			.data("origWidth", $(this).width())
+			.width(0)
+			.animate({
+				width: $(this).data("origWidth")
+			}, 1200);
+	});
+});
+</script>
+<div id="content">
+<p style='text-align:center;'>Progress:</p>
+<div style='margin:auto auto; width:350px;' class="meter">
+	<span style="width: 
+	<?php 
+	$proc=((time()-$config['start_time'])/($config['end_time']-$config['start_time'])*100);
+	if($proc>100){echo 100;}else{echo $proc;} ?>%">
+	</span>
+</div>
 <br/>
 <div style='margin:auto auto; width:500px;text-align:center;'>
 <?php
@@ -34,59 +60,9 @@ $q=mysql_fetch_array($valst);
 echo "All together there are <b>".$r["skaits"]."</b> different locations in <b>".$q["skaits"]."</b> countries.<br/>";
 ?>
 </div>
-
-
-
-
-
-
+</div>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 	var chart2;
       google.load('visualization', '1.0', {'packages':['corechart']});
-      google.setOnLoadCallback(drawChart);
 </script>
-
-<script type="text/javascript">
-  function drawVisualization() {
-	// Create and populate the data table.
-	var data = new google.visualization.DataTable();
-	var raw_data = [['All tweets', <?php echo $tvkopa; ?>],
-					['Tweets with location data', <?php echo $atrviet; ?>],
-					['Tweets from Latvia', <?php echo $lv; ?>],
-					['Tweets from other countries', <?php echo $geonlv; ?>]
-					];
-	var years = [''];
-	var options = {'title':'Tweet stats',
-				 'width':485,
-				 'height':300,
-				 'backgroundColor':'transparent',
-				 };
-	data.addColumn('string', 'Year');
-	for (var i = 0; i  < raw_data.length; ++i) {
-	  data.addColumn('number', raw_data[i][0]);    
-	}
-	data.addRows(years.length);
-	for (var j = 0; j < years.length; ++j) {    
-	  data.setValue(j, 0, years[j].toString());    
-	}
-	for (var i = 0; i  < raw_data.length; ++i) {
-	  for (var j = 1; j  < raw_data[i].length; ++j) {
-		data.setValue(j-1, i+1, raw_data[i][j]);    
-	  }
-	}
-	new google.visualization.BarChart(document.getElementById('visualization')).
-		draw(data,
-			 {	title:"Tweet statistics",
-				width:800, height:400,
-				hAxis: {title: "Tweets"},
-				backgroundColor:'white'
-			  }
-		);
-  }
-  google.setOnLoadCallback(drawVisualization);
-</script>
-<br/>
-<div id="grafiks" style="text-align:center;">
-    <div id="visualization"></div>
-</div>

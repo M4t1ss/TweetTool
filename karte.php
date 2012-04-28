@@ -3,6 +3,10 @@
 <?php
 //Paņem dažādās vietas
 $q = mysql_query("SELECT distinct geo, count( * ) skaits FROM `tweets` WHERE geo!='' GROUP BY geo ORDER BY count( * ) DESC");
+if(mysql_num_rows($q)==0){
+	echo "The database is empty!";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/home'\",1250);</script>";
+}else{
 ?>
 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript">
@@ -66,3 +70,4 @@ $q = mysql_query("SELECT distinct geo, count( * ) skaits FROM `tweets` WHERE geo
 			}
 		</script>
 		<div id="map_canvas" style="margin:auto auto; width:950px; height:520px"></div>
+<?php }?>

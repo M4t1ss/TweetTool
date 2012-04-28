@@ -7,14 +7,16 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	$password = $_POST['Password'];
 	$database = $_POST['database'];
 	$keywords = $_POST['Keywords'];
-	$time = $_POST['Time'];
+	$time = $_POST['Time']+time();
 	error_reporting(0);
 	ignore_user_abort(true);
-	set_time_limit($time);
+	set_time_limit(0);
 	//nomaina datubâzes nosaukumu
 	$db_name = strip_tags($_POST['database']);
 	$config = MyConfig::read('includes/settings.php');
 	$config['db_database'] = $db_name;
+	$config['start_time'] = time();
+	$config['end_time'] = $time;
 	MyConfig::write('includes/settings.php', $config);
 	//aizver esoðo pieslçgumu DB
 	mysql_close($connection);
@@ -61,9 +63,13 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 		);
 
 		$context = stream_context_create($opts);
-		while (1){
+		while (time()<$time){
 			$instream = fopen('https://'.$username.':'.$password.'@stream.twitter.com/1/statuses/filter.json','r' ,false, $context);
 			while(! feof($instream)) {
+					if(time()>$time) {
+					   break;
+					}
+
 				if(! ($line = stream_get_line($instream, 20000, "\n"))) {
 					continue;
 				}else{
@@ -77,9 +83,9 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 					$tt = explode(" ", $text);
 					$text = "";
 					for ($q = 0; $q < sizeof($tt); $q++){
-						if (substr($tt[$q], 0, 1)=="@") $tt[$q] = "_@username";
-						if (substr($tt[$q], 0, 1)=="#") $tt[$q] = "_@hashtag"; //vai tomçr ðitos neòemt nost?
-						if (substr($tt[$q], 0, 4)=="http") $tt[$q] = "_@URL";
+						if (substr($tt[$q], 0, 1)=="@" && $config['replace_usernames']=="y") $tt[$q] = "_@username";
+						if (substr($tt[$q], 0, 1)=="#" && $config['replace_hashtags']=="y") $tt[$q] = "_@hashtag"; 
+						if (substr($tt[$q], 0, 4)=="http" && $config['replace_links']=="y") $tt[$q] = "_@URL";
 						$text.=$tt[$q];
 						if ($q!=sizeof($tt)-1)$text.=" ";
 					}
@@ -143,24 +149,9 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 <br/>
 <form style="margin:auto auto; width:550px;" enctype="multipart/form-data" method="post" action="<?php echo $tweettool_path; ?>?id=stream">
 <TABLE>
-<TR>
-   <TD class="in">Database name:</TD>
-   <TD class="in">
-   <INPUT TYPE='text' size="52" NAME='database' placeholder="Database name" value="<?php echo $db_database; ?>" required autofocus/>
-   </TD>
-</TR>
-<TR>
-   <TD class="in">Twitter username:</TD>
-   <TD class="in">
-   <INPUT TYPE='text' size="52" NAME='Username' placeholder="Username" value="<?php echo $tw_user;?>" required />
-   </TD>
-</TR>
-<TR>
-   <TD class="in">Twitter password:</TD>
-   <TD class="in">
-   <INPUT TYPE='password' size="52" NAME='Password' placeholder="Password" value="<?php echo $tw_pass;?>" required />
-   </TD>
-</TR>
+   <INPUT TYPE='hidden' size="52" NAME='database' value="<?php echo $db_database; ?>"/>
+   <INPUT TYPE='hidden' size="52" NAME='Username' value="<?php echo $tw_user;?>"/>
+   <INPUT TYPE='hidden' size="52" NAME='Password' value="<?php echo $tw_pass;?>"/>
 <TR>
    <TD class="in">Keywords:</TD>
    <TD class="in">

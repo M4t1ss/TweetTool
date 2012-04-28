@@ -103,8 +103,8 @@ if ($emo == 'Mon'){
 $krasa=TRUE;
 echo "<table id='results' style='margin:auto auto;'>";
 echo "<tr>
-<th>Lietotājs</th>
-<th>Tvīts</th>
+<th>User</th>
+<th>Tweet</th>
 </tr>";
 while($r=mysql_fetch_array($vardi)){
 	if($emo != 'saldumi' && $emo != 'gala' && $emo != 'piens' && $emo != 'darzeni' && $emo != 'augli' && $emo != 'maize' && $emo != 'alkoholiskie' && $emo != 'bezalkoholiskie'){

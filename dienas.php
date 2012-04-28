@@ -4,6 +4,10 @@
 <div style='margin:auto auto;width:500px;'>
 <?php
 $q = mysql_query("SELECT created_at FROM `tweets`");
+if(mysql_num_rows($q)==0){
+	echo "The database is empty!";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/home'\",1250);</script>";
+}else{
 while($r=mysql_fetch_array($q)){
 	$laiks=$r["created_at"];
 	$laiks=strtotime($laiks);
@@ -84,6 +88,7 @@ switch ($ddd) {
 ?></div></a>
 <br/>
 <?php
+}
 }
 }
 ?>

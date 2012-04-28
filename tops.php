@@ -11,6 +11,10 @@ echo "<tr>
 <th>Tweets</th>
 </tr>";
 $q = mysql_query("SELECT screen_name, count( * ) skaits FROM tweets GROUP BY screen_name ORDER BY count( * ) DESC LIMIT 0 , 15");
+if(mysql_num_rows($q)==0){
+	echo "The database is empty!";
+   echo "<script type=\"text/javascript\">setTimeout(\"window.location = '$tweettool_path/home'\",1250);</script>";
+}else{
 while($r=mysql_fetch_array($q)){
 if ($krasa==TRUE) {$kr=" class='even'";}else{$kr="";}
 $vards=$r["screen_name"];
@@ -20,5 +24,6 @@ $krasa=!$krasa;
 $i++;
 }
 echo "</table>";
+}
 ?>
 </div>
