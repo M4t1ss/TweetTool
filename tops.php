@@ -19,7 +19,7 @@ while($r=mysql_fetch_array($q)){
 if ($krasa==TRUE) {$kr=" class='even'";}else{$kr="";}
 $vards=$r["screen_name"];
 $skaits=$r["skaits"];
-echo "<tr".$kr."><td>".$i.".</td><td><b><a style='text-decoration:none;color:#207DAC;' href='<?php echo $tweettool_path; ?>draugs/".$vards."'>".$vards."</a></b></td><td>".$skaits."</td></tr>";
+echo "<tr".$kr."><td>".$i.".</td><td><b><a style='text-decoration:none;color:#207DAC;' href='$tweettool_path/draugs/".$vards."'>".$vards."</a></b></td><td>".$skaits."</td></tr>";
 $krasa=!$krasa;
 $i++;
 }
