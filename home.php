@@ -16,12 +16,13 @@ $users = mysql_query("SELECT * FROM users");
 if(mysql_num_rows($tweets)>0){
 	echo "<p>Export to CSV: ";
 	echo "<select onchange=\"if(this.options[this.selectedIndex].value != ''){window.top.location.href=this.options[this.selectedIndex].value}\">";
-	echo "<option value='tocsv.php?table=tweets'>Tweets</option>";
-	if(mysql_num_rows($hashtags)>0) echo "<option value='tocsv.php?table=hashtags'>Hashtags</option>";
-	if(mysql_num_rows($links)>0) echo "<option value='tocsv.php?table=links'>Links</option>";
-	if(mysql_num_rows($mentions)>0) echo "<option value='tocsv.php?table=mentions'>Mentions</option>";
-	if(mysql_num_rows($tokens)>0) echo "<option value='tocsv.php?table=tokens'>Tokens</option>";
-	if(mysql_num_rows($users)>0) echo "<option value='tocsv.php?table=users'>Users</option>";
+	echo "<option></option>";
+	echo "<option value='includes/tocsv.php?table=tweets'>Tweets</option>";
+	if(mysql_num_rows($hashtags)>0) echo "<option value='includes/tocsv.php?table=hashtags'>Hashtags</option>";
+	if(mysql_num_rows($links)>0) echo "<option value='includes/tocsv.php?table=links'>Links</option>";
+	if(mysql_num_rows($mentions)>0) echo "<option value='includes/tocsv.php?table=mentions'>Mentions</option>";
+	if(mysql_num_rows($tokens)>0) echo "<option value='includes/tocsv.php?table=tokens'>Tokens</option>";
+	if(mysql_num_rows($users)>0) echo "<option value='includes/tocsv.php?table=users'>Users</option>";
 	echo "</select>";
 	echo "</p>";
 }

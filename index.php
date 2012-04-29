@@ -1,7 +1,7 @@
 <?php
 $tweettool_path = str_replace("index.php","",$_SERVER['PHP_SELF']);
 ob_start();
-//Uzstādījumi
+//Settings
 class MyConfig
 {
     public static function read($filename)
@@ -51,6 +51,9 @@ header('Location: configure');
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery.ui.datepicker-lv.js"></script>
+    <script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/jquery.js"></script>
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/jquery.flot.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#contents").fadeIn(1000);
