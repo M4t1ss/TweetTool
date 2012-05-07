@@ -34,7 +34,7 @@ $line = "";
 $comma = "";
 foreach($row as $name => $value) {
     $line .= $comma . '"' . str_replace('"', '""', $name) . '"';
-    $comma = ",";
+    $comma = ";";
 }
 $line .= "\n";
 fputs($fp, $line);
@@ -49,7 +49,7 @@ while($row = mysql_fetch_assoc($res)) {
     $comma = "";
     foreach($row as $value) {
         $line .= $comma . '"' . str_replace('"', '""', $value) . '"';
-        $comma = ",";
+        $comma = ";";
     }
     $line .= "\n";
     fputs($fp, $line);

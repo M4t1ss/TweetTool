@@ -38,8 +38,6 @@ $(function () {
 			res.push([i, data[i]])
 		return res;
 	}
-	// setup control widget
-	var updateInterval = 50;
 	// setup plot
 	var options = {
 		series: { shadowSize: 0 }, // drawing is faster without shadows
@@ -51,7 +49,7 @@ $(function () {
 		plot.setData([ getRandomData() ]);
 		// since the axes don't change, we don't need to call plot.setupGrid()
 		plot.draw();
-		setTimeout(update, updateInterval);
+		setTimeout(update, 1000);
 	}
 	update();
 });
@@ -114,10 +112,12 @@ $r=mysql_fetch_array($link);
 $lv = $r["skaits"];
 echo "There are <b>".$r["skaits"]."</b> links in the tweets.<br/>";
 ?>
+<br/>
+<a style="font-weight:bold;" href="<?php echo $tweettool_path; ?>emoticons">Emoticon stats</a>
 </div>
 </div>
 </div>
-<div style='margin-top:-230px;float:left;width:500px;'>
+<div style='margin-top:-230px;float:left;width:500px;height:880px;'>
 <p style="text-align:left;font-weight:bold;">Tweet stream:</p>
 <?php
 while($p=mysql_fetch_array($latest)){
@@ -134,5 +134,39 @@ while($p=mysql_fetch_array($latest)){
 }
 ?>
 </div>
+</div>
+<div class="tweet" style="height:250px;float:left;margin-top:-340px;background-color:rgba(255, 255, 255,0.7);width:407px;margin-left:30px;">
+<?php
+$keywords = explode(",", $config['keywords']);
+foreach ($keywords as $keyword){
+	$kopa = mysql_query("SELECT count(*) skaits FROM `tweets` WHERE  (`text` LIKE '%$keyword%')");
+	$r=mysql_fetch_array($kopa);
+	$skaits[$keyword] = $r["skaits"];
+	$others = $others-$skaits[$keyword];
+}
+?>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+var chart;
+  google.load('visualization', '1.0', {'packages':['corechart']});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Topping');
+  data.addColumn('number', 'Slices');
+  data.addRows([
+<?php foreach ($keywords as $keyword){ ?>
+	['<?php echo $keyword;?>', <?php echo $skaits[$keyword]; ?>],
+<?php } ?>]);
+  var options = {'title':'Keywords',
+				 'width':470,
+				 'height':300,
+				 'backgroundColor':'transparent',
+				 'is3D':'true'};
+  chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+  }
+</script>
+<div id="chart_div"></div>
 </div>
 </div>

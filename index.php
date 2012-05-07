@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR);
 $tweettool_path = str_replace("index.php","",$_SERVER['PHP_SELF']);
 ob_start();
 //Settings
@@ -38,7 +39,7 @@ header('Location: configure');
 <head>
 <title>TweetTool</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="description" content="Apskati ko Tu un profili, kam Tu seko ir tvītojuši par ēšanu."/>
+<meta name="description" content="Collect and analyze tweets by keywords."/>
 <meta name="keywords" content="TwitterRīks, riks, analīze, Twitter, @M4t1ss, Matīss, Rikters, Matīss Rikters"/>
 <meta name="author" content="Matīss Rikters"/>
 <link rel="shortcut icon" href="<?php echo $tweettool_path; ?>favicon.ico" type="image/x-icon" />
@@ -47,13 +48,11 @@ header('Location: configure');
 <link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/jq/css/custom-theme/jquery-ui-1.8.18.custom.css" />	
 <link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/tag/css/wordcloud.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/style.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $tweettool_path; ?>includes/tooltip/style.css" />
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo $tweettool_path; ?>includes/jq/js/jquery.ui.datepicker-lv.js"></script>
-    <script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/jquery.js"></script>
-    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/excanvas.min.js"></script><![endif]-->
-    <script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/jquery.flot.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="<?php echo $tweettool_path; ?>includes/flot/jquery.flot.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#contents").fadeIn(1000);

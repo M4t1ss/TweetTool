@@ -17,6 +17,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	$config['db_database'] = $db_name;
 	$config['start_time'] = time();
 	$config['end_time'] = $time;
+	$config['keywords'] = $keywords;
 	MyConfig::write('includes/settings.php', $config);
 	//aizver esoðo pieslçgumu DB
 	mysql_close($connection);
@@ -110,8 +111,13 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 					//Sadala tekstu tokenos un samet datu bâzç
 					$tt = explode(" ", $text);
 					for ($q = 0; $q < sizeof($tt); $q++){
-						$ielikts = false;
-						if ($tt[$q] != "_@username" && $tt[$q] != "_@hashtag" && $tt[$q] != "_@URL"){
+						//izvâc pieturzîmes
+						$tt[$q] = str_replace("?","",$tt[$q]);
+						$tt[$q] = str_replace("!","",$tt[$q]);
+						$tt[$q] = str_replace(",","",$tt[$q]);
+						$tt[$q] = str_replace(".","",$tt[$q]);
+						if ($tt[$q] != "_@username" && $tt[$q] != "_@hashtag" && $tt[$q] != "_@URL" && $tt[$q] != "RT" && strlen($tt[$q]) > 1 && !is_numeric($tt[$q])){
+							$vaaa = $tt[$q];
 							$ok_v = mysql_query("INSERT INTO tokens (tweet_id,token) VALUES ('$id', '$vaaa')",$remote);
 						}
 					}
