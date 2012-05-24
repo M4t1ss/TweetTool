@@ -1,3 +1,9 @@
+<?php
+if(isset($_GET['kill'])){
+	//Kills previous process if any
+	include('kill.php');
+}
+?>
 <h2 style='text-align:center;'>Tweet statistics</h2>
 <script>
 $(function() {
@@ -61,7 +67,7 @@ $(function () {
 </div>
 <div id="content">
 <div style="float:left; padding-left:30px;">
-<p style="font-weight:bold; width:430px;">Progress:</p>
+<p style="font-weight:bold; width:430px;">Progress (<a href="kill">Stop</a>):</p>
 <div style='width:395px;margin-top:-10px;' class="meter">
 	<span style="width: 
 	<?php 

@@ -7,10 +7,17 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	$password = $_POST['Password'];
 	$database = $_POST['database'];
 	$keywords = $_POST['Keywords'];
-	$time = $_POST['Time']+time();
+	$seconds = $_POST['Seconds'];
+	$minutes = $_POST['Minutes'];
+	$hours = $_POST['Hours'];
+	$days = $_POST['Days'];
+	$time = $seconds+$minutes*60+$hours*3600+$days*86400+time();
+	$db_table_prefix=str_replace(" ","",str_replace(",","_",$keywords))."_".time();
 	error_reporting(0);
 	ignore_user_abort(true);
 	set_time_limit(0);
+	//Kills previous process if any
+	include('kill.php');
 	//nomaina datubâzes nosaukumu
 	$db_name = strip_tags($_POST['database']);
 	$config = MyConfig::read('includes/settings.php');
@@ -18,6 +25,7 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 	$config['start_time'] = time();
 	$config['end_time'] = $time;
 	$config['keywords'] = $keywords;
+	$config['pid'] = getmypid(); 
 	MyConfig::write('includes/settings.php', $config);
 	//aizver esoðo pieslçgumu DB
 	mysql_close($connection);
@@ -116,6 +124,16 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
 						$tt[$q] = str_replace("!","",$tt[$q]);
 						$tt[$q] = str_replace(",","",$tt[$q]);
 						$tt[$q] = str_replace(".","",$tt[$q]);
+						$tt[$q] = str_replace(";","",$tt[$q]);
+						$tt[$q] = str_replace(":","",$tt[$q]);
+						$tt[$q] = str_replace("{","",$tt[$q]);
+						$tt[$q] = str_replace("}","",$tt[$q]);
+						$tt[$q] = str_replace("[","",$tt[$q]);
+						$tt[$q] = str_replace("]","",$tt[$q]);
+						$tt[$q] = str_replace("<","",$tt[$q]);
+						$tt[$q] = str_replace(">","",$tt[$q]);
+						$tt[$q] = str_replace("/","",$tt[$q]);
+						$tt[$q] = str_replace("\\","",$tt[$q]);
 						if ($tt[$q] != "_@username" && $tt[$q] != "_@hashtag" && $tt[$q] != "_@URL" && $tt[$q] != "RT" && strlen($tt[$q]) > 1 && !is_numeric($tt[$q])){
 							$vaaa = $tt[$q];
 							$ok_v = mysql_query("INSERT INTO tokens (tweet_id,token) VALUES ('$id', '$vaaa')",$remote);
@@ -159,20 +177,31 @@ if($_POST['submit_stream']) //ja piespiests sâkt vâkðanu
    <INPUT TYPE='hidden' size="52" NAME='Username' value="<?php echo $tw_user;?>"/>
    <INPUT TYPE='hidden' size="52" NAME='Password' value="<?php echo $tw_pass;?>"/>
 <TR>
-   <TD class="in">Keywords:</TD>
-   <TD class="in">
+   <TD>Keywords:</TD>
+   <TD>
    <INPUT TYPE='text' size="52" NAME='Keywords' placeholder="Keywords seperated by commas" required />
    </TD>
 </TR>
+<!--
 <TR>
-   <TD class="in">How long to collect:</TD>
-   <TD class="in">
-   <INPUT TYPE='text' size="52" NAME='Time' placeholder="Time in seconds" required />
+   <TD>Users:</TD>
+   <TD>
+   <INPUT TYPE='text' size="52" NAME='Users' placeholder="Users to follow" />
+   </TD>
+</TR>
+-->
+<TR>
+   <TD>How long to collect:</TD>
+   <TD>
+   <INPUT TYPE='text' size="7" NAME='Days' placeholder="Days"  />
+   <INPUT TYPE='text' size="7" NAME='Hours' placeholder="Hours" />
+   <INPUT TYPE='text' size="8" NAME='Minutes' placeholder="Minutes" />
+   <INPUT TYPE='text' size="8" NAME='Seconds' placeholder="Seconds" required/>
    </TD>
 </TR>
 <TR>
-   <TD class="in"></TD>
-   <TD class="in"><INPUT style="float:left;" TYPE="submit" name="submit_stream" value="Start"/></TD> 
+   <TD></TD>
+   <TD><INPUT style="float:left;" TYPE="submit" name="submit_stream" value="Start"/></TD> 
 </TR>
 </TABLE>
 </form>
