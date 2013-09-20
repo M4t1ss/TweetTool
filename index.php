@@ -28,6 +28,11 @@ header('Location: configure');
 	$db_database = $config['db_database'];
 	$tw_user = $config['twitter_username'];
 	$tw_pass = $config['twitter_password'];
+	
+	$conskey = $config['CONSUMER_KEY'];
+	$conssecret = $config['CONSUMER_SECRET'];
+	$oauthtoken = $config['OAUTH_TOKEN'];
+	$oauthsecret = $config['OAUTH_SECRET'];
 
 	$connection = @mysql_connect($db_server, $db_user, $db_password);
 	mysql_set_charset("utf8", $connection);

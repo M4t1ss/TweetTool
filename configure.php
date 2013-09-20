@@ -7,8 +7,12 @@ if($_POST['saveset']) //ja piespiests saglabāt
 	$config['db_user'] = $_POST['database_username'];
 	$config['db_password'] = $_POST['database_password'];
 	$config['db_database'] = $_POST['database_name'];
-	$config['twitter_username'] = $_POST['twitter_username'];
-	$config['twitter_password'] = $_POST['twitter_password'];
+	$config['TWITTER_CONSUMER_KEY'] = $_POST['conskey'];
+	$config['TWITTER_CONSUMER_SECRET'] = $_POST['conssecret'];
+	$config['CONSUMER_KEY'] = $_POST['conskey'];
+	$config['CONSUMER_SECRET'] = $_POST['conssecret'];
+	$config['OAUTH_TOKEN'] = $_POST['oauthtoken'];
+	$config['OAUTH_SECRET'] = $_POST['oauthsecret'];
 	$config['replace_usernames'] = $_POST['group1'];
 	$config['replace_hashtags'] = $_POST['group2'];
 	$config['replace_links'] = $_POST['group3'];
@@ -78,15 +82,27 @@ if($_POST['saveset']) //ja piespiests saglabāt
    </TD>
 </TR>
 <TR>
-   <TD class="in">Twitter username:</TD>
+   <TD class="in">Twitter consumer key:</TD>
    <TD class="in">
-   <INPUT TYPE='text' size="52" NAME='twitter_username' placeholder="username" value="<?php echo $tw_user;?>" />
+   <INPUT TYPE='text' size="52" NAME='conskey' placeholder="username" value="<?php echo $conskey;?>" />
    </TD>
 </TR>
 <TR>
-   <TD class="in">Twitter password:</TD>
+   <TD class="in">Twitter consumer secret:</TD>
    <TD class="in">
-   <INPUT TYPE='password' size="52" NAME='twitter_password' placeholder="password" value="<?php echo $tw_pass;?>" />
+   <INPUT TYPE='text' size="52" NAME='conssecret' placeholder="password" value="<?php echo $conssecret;?>" />
+   </TD>
+</TR>
+<TR>
+   <TD class="in">Twitter oauth token:</TD>
+   <TD class="in">
+   <INPUT TYPE='text' size="52" NAME='oauthtoken' placeholder="password" value="<?php echo $oauthtoken;?>" />
+   </TD>
+</TR>
+<TR>
+   <TD class="in">Twitter oauth secret:</TD>
+   <TD class="in">
+   <INPUT TYPE='text' size="52" NAME='oauthsecret' placeholder="password" value="<?php echo $oauthsecret;?>" />
    </TD>
 </TR>
 <TR>
