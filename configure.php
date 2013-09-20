@@ -82,25 +82,25 @@ if($_POST['saveset']) //ja piespiests saglabāt
    </TD>
 </TR>
 <TR>
-   <TD class="in">Twitter consumer key:</TD>
+   <TD class="in">Twitter consumer key (<a style="color:lightblue;" href="https://dev.twitter.com/apps">get it here</a>):</TD>
    <TD class="in">
    <INPUT TYPE='text' size="52" NAME='conskey' placeholder="username" value="<?php echo $conskey;?>" />
    </TD>
 </TR>
 <TR>
-   <TD class="in">Twitter consumer secret:</TD>
+   <TD class="in">Twitter consumer secret (<a style="color:lightblue;" href="https://dev.twitter.com/apps">get it here</a>):</TD>
    <TD class="in">
    <INPUT TYPE='text' size="52" NAME='conssecret' placeholder="password" value="<?php echo $conssecret;?>" />
    </TD>
 </TR>
 <TR>
-   <TD class="in">Twitter oauth token:</TD>
+   <TD class="in">Twitter oauth token (<a style="color:lightblue;" href="https://dev.twitter.com/apps">get it here</a>):</TD>
    <TD class="in">
    <INPUT TYPE='text' size="52" NAME='oauthtoken' placeholder="password" value="<?php echo $oauthtoken;?>" />
    </TD>
 </TR>
 <TR>
-   <TD class="in">Twitter oauth secret:</TD>
+   <TD class="in">Twitter oauth secret (<a style="color:lightblue;" href="https://dev.twitter.com/apps">get it here</a>):</TD>
    <TD class="in">
    <INPUT TYPE='text' size="52" NAME='oauthsecret' placeholder="password" value="<?php echo $oauthsecret;?>" />
    </TD>

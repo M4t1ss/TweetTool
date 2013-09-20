@@ -78,8 +78,6 @@ class FilterTrackConsumer extends OauthPhirehose
   {
     $data = json_decode($status, true);
     if (is_array($data) && isset($data['user']['screen_name'])) {
-		//kas notiek ar tvitu
-		//	print $data['user']['screen_name'] . ': ' . urldecode($data['text']) . "<br/>";
 	$config = MyConfig::read('includes/settings.php');
 	$db_server = $config['db_server'];
 	$db_user = $config['db_user'];

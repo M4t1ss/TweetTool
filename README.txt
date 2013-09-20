@@ -13,4 +13,5 @@ To install simply:
 	1. Unpack all files in any directory of your server (i.e. /tweettool).
 	2. Create a new MySQL database.
 	3. Open that directory in your web browser (i.e. http://localhost/tweettool).
-	4. Fill in the required information and your good to go! ;)
+	4. Fill in the required information in the settings page and your good to go! ;)
+		a)To get a consumer key, secret and oauth tokens - register a Twitter app - https://dev.twitter.com/apps
