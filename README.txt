@@ -8,6 +8,10 @@
 Requirements:
 	1. Server software with the latest PHP and MySQL installed. (Tested on MySQL 5.5.16 and PHP 5.3.8)
 	2. At least a 1.3GHz processor (tested on a Intel Celeron 1.3GHz)
+	3. If using a Windows server - for the stop (stop collecting tweets) button to work, these lines need to be added to the php.ini file:
+		[COM_DOT_NET]
+		extension=php_com_dotnet.dll
+
 
 To install simply:
 	1. Unpack all files in any directory of your server (i.e. /tweettool).
@@ -15,3 +19,4 @@ To install simply:
 	3. Open that directory in your web browser (i.e. http://localhost/tweettool).
 	4. Fill in the required information in the settings page and your good to go! ;)
 		a)To get a consumer key, secret and oauth tokens - register a Twitter app - https://dev.twitter.com/apps
+		

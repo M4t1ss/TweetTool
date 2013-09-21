@@ -123,7 +123,7 @@ echo "There are <b>".$r["skaits"]."</b> links in the tweets.<br/>";
 </div>
 </div>
 </div>
-<div style='margin-top:-230px;float:left;width:500px;height:880px;'>
+<div style='margin-top:-230px;float:left;width:500px;height:880px;overflow:hidden'>
 <p style="text-align:left;font-weight:bold;">Tweet stream:</p>
 <?php
 while($p=mysql_fetch_array($latest)){

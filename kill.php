@@ -8,10 +8,12 @@ $proc_id = $config['pid'];
 if (stristr(PHP_OS, 'WIN')) { 
 	//Kill for Windows OS
 	function win_kill($p_id){
-		$wmi=new COM("winmgmts:{impersonationLevel=impersonate}!\\\\.\\root\\cimv2");
-		$procs=$wmi->ExecQuery("SELECT * FROM Win32_Process WHERE ProcessId='".$p_id."'");
-		foreach($procs as $proc)
-		$proc->Terminate();
+		if(class_exists(COM)){
+			$wmi=new COM("winmgmts:{impersonationLevel=impersonate}!\\\\.\\root\\cimv2");
+			$procs=$wmi->ExecQuery("SELECT * FROM Win32_Process WHERE ProcessId='".$p_id."'");
+			foreach($procs as $proc)
+			$proc->Terminate();
+		}
 }
 win_kill($proc_id);
 } else { 
